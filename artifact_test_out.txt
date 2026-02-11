@@ -1,0 +1,7 @@
+Testing authorizeRoles('ADMIN', 'EDITOR')...
+Test 1: ADMIN role
+PASS: ADMIN allowed
+Test 2: EDITOR role
+PASS: EDITOR allowed
+Test 3: VIEWER role
+PASS: VIEWER blocked (403)

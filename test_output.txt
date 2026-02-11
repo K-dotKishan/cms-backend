@@ -1,0 +1,9 @@
+Testing authorizeRoles middleware...
+Test 1: Missing user
+PASS: Status is 401
+Test 2: User without role
+PASS: Status is 401
+Test 3: User with wrong role
+PASS: Status is 403
+Test 4: User with correct role
+PASS: Next middleware called

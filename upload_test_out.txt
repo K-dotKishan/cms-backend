@@ -1,0 +1,8 @@
+Testing Upload Integration (Static Analysis)...
+PASS: Import path updated to middleware folder
+PASS: No 'app.post' usage found
+PASS: Route definition contains role check and upload middleware
+Testing Upload Integration (Static Analysis 2)...
+PASS: Import uses default export correctly
+PASS: No 'app.post' usage found
+PASS: Route definition contains role check and upload middleware

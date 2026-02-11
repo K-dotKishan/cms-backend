@@ -2,10 +2,10 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import authRoutes from "./routes/auth.route.js";
-// import artifactRoutes from "./routes/artifacts.route.js"
+import artifactRoutes from "./routes/artifacts.route.js"
 import cookieParser from "cookie-parser";
 const app = express();
-
+import comment from "./routes/comment.route.js";
 /* Middlewares */
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
@@ -23,9 +23,14 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/auth",authRoutes);
-// app.use("/artifacts", artifactRoutes);
+import likeRoutes from "./routes/like.route.js";
+
+app.use("/auth", authRoutes);
+app.use("/artifacts", artifactRoutes);
+app.use("/likes", likeRoutes);
+app.use("/comments", comment);
 export default app;
+
 
 
 
