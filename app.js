@@ -4,12 +4,12 @@ import morgan from "morgan";
 import authRoutes from "./routes/auth.route.js";
 import artifactRoutes from "./routes/artifacts.route.js"
 import cookieParser from "cookie-parser";
-import { testing } from "./cron/testing.js";
-import { draftCleanup } from "./cron/draftCleanup.js";
+
 import webhook from "./webhook/webhook.js";
 const app = express();
 import comment from "./routes/comment.route.js";
 /* Middlewares */
+
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
@@ -28,11 +28,23 @@ app.get("/", (req, res) => {
 });
 
 import likeRoutes from "./routes/like.route.js";
+import chatRoutes from "./routes/chats.route.js";
+
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use("/auth", authRoutes);
 app.use("/artifacts", artifactRoutes);
 app.use("/likes", likeRoutes);
 app.use("/comments", comment);
+app.use("/chats", chatRoutes);
+
+app.get("/chat", (req, res) => {
+  res.sendFile(path.join(__dirname, "chat.html"));
+});
 
 // normal endpoint no 
 app.use("/webhook", webhook);

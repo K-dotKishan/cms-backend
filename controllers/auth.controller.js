@@ -108,16 +108,20 @@ export const login = async (req, res) => {
     }
 
     const result = await loginService(email, password);
+
+    // Set the cookie for browser-based sessions
     res.cookie("token", result.token, {
       httpOnly: true,
-      secure: false, // Set to true in production with HTTPS
+      secure: process.env.NODE_ENV === "production", 
       sameSite: "lax",
       maxAge: 60 * 60 * 1000 // 1 hour
     });
 
+    // Send JSON response with token for Postman/Frontend access
     res.status(200).json({
       success: true,
       message: "Login successful",
+      token: result.token, // <--- Add this so you can copy it in Postman
       user: result.user
     });
   } catch (error) {

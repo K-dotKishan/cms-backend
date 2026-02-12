@@ -24,24 +24,58 @@ export const verifyToken = (req, res, next) => {
     }
 };
 
+// export const authMiddleware = (req, res, next) => {
+//     try {
+//         const token = req.cookies?.token ||
+//             req.headers.authorization?.split(" ")[1];
+//         if (!token) {
+//             return res.status(401).json({
+//                 success: false,
+//                 message: "Unauthorized"
+//             });
+//         }
+//         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+//             if (err) {
+//                 return res.status(403).json({ message: "Forbidden" });
+//             }
+//             req.user = user;
+//             next();
+//         });
+//     } catch (error) {
+//         return res.status(500).json({ message: "Internal Server Error" })
+//     }
+// };
+
+
 export const authMiddleware = (req, res, next) => {
     try {
-        const token = req.cookies?.token ||
-            req.headers.authorization?.split(" ")[1];
+        const token = req.cookies?.token || 
+                      req.headers.authorization?.split(" ")[1];
+
         if (!token) {
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized"
             });
         }
+
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
-                return res.status(403).json({ message: "Forbidden" });
+                // Helpful for debugging: check your terminal to see the specific error
+                console.error("JWT Verification Error:", err.message); 
+                return res.status(403).json({ 
+                    success: false,
+                    message: "Forbidden",
+                    error: err.message // Optional: send the message to Postman for easier debugging
+                });
             }
             req.user = user;
             next();
         });
     } catch (error) {
-        return res.status(500).json({ message: "Internal Server Error" })
+        return res.status(500).json({ 
+            success: false,
+            message: "Internal Server Error" 
+        });
     }
 };
